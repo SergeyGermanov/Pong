@@ -1,10 +1,16 @@
 let playerPaddle;
 let aiPaddle;
+let ball;
+let playerScore;
+let aiScore;
 
 function setup() {
     createCanvas(624, 351)
     playerPaddle = new Paddle(26);
     aiPaddle = new Paddle(width - 48);
+    ball = new Ball();
+    playerScore = new Score(width / 2 - 40);
+    aiScore = new Score(width / 2 + 40);
 };
 
 function draw() {
@@ -12,14 +18,36 @@ function draw() {
     playerPaddle.display();
     aiPaddle.display();
 
-    if (playerPaddle.isUp) {
-        playerPaddle.up();
-    } else if (playerPaddle.isDown) {
-        playerPaddle.down();
-    }
+    playerPaddle.update();
+    aiPaddle.update();
 
+    processAI();
+
+    ball.update(playerScore, aiScore);
+    ball.display();
+
+    ball.hasHitPlayer(playerPaddle);
+    ball.hasHitAi(aiPaddle);
+
+    stroke(255);
+    line(width / 2, 0, width / 2, height);
+
+    playerScore.display();
+    aiScore.display();
 
 };
+
+function processAI() {
+    let middleOfPaddle = aiPaddle.y + aiPaddle.height / 2;
+
+    if (middleOfPaddle > ball.y) {
+        aiPaddle.isUp = true;
+        aiPaddle.isDown = false;
+    } else {
+        aiPaddle.isDown = true;
+        aiPaddle.isUp = false;
+    }
+}
 
 function keyPressed() {
     if (keyCode === UP_ARROW) {

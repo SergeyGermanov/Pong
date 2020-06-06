@@ -16,10 +16,23 @@ class Paddle {
     }
 
     up() {
-        this.y -= 2;
+        if (this.y > 0) {
+            this.y -= 2;
+        }
     }
 
     down() {
-        this.y += 2;
+        if (this.y < height - this.height) {
+            this.y += 2;
+        }
+
+    }
+
+    update() {
+        if (this.isUp) {
+            this.up();
+        } else if (this.isDown) {
+            this.down();
+        }
     }
 }
