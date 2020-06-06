@@ -21,7 +21,8 @@ function draw() {
     playerPaddle.update();
     aiPaddle.update();
 
-    processAI();
+    processAI(aiPaddle);
+    // processAI(playerPaddle);
 
     ball.update(playerScore, aiScore);
     ball.display();
@@ -37,15 +38,15 @@ function draw() {
 
 };
 
-function processAI() {
-    let middleOfPaddle = aiPaddle.y + aiPaddle.height / 2;
+function processAI(ai) {
+    let middleOfPaddle = ai.y + ai.height / 2;
 
     if (middleOfPaddle > ball.y) {
-        aiPaddle.isUp = true;
-        aiPaddle.isDown = false;
+        ai.isUp = true;
+        ai.isDown = false;
     } else {
-        aiPaddle.isDown = true;
-        aiPaddle.isUp = false;
+        ai.isDown = true;
+        ai.isUp = false;
     }
 }
 
